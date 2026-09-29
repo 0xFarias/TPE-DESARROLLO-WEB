@@ -1,0 +1,465 @@
+/* ==========================================================
+   Sesión 2 – CSS
+   Registro del Club de Código
+   ----------------------------------------------------------
+   Estilo: bloques de color planos, bordes negros gruesos y
+   sombras sólidas (sin difuminar).
+
+   1. Variables
+   2. Reset básico
+   3. Página (Grid de filas)
+   4. Encabezado (Flexbox)
+   5. Contenido principal (Grid de 2 columnas)
+   6. Presentación
+   7. Tarjeta del formulario
+   8. Formulario (Grid con áreas)
+   9. Campos
+   10. Botón
+   11. Pie de página
+   12. Diseño adaptable
+   13. Movimiento reducido
+   14. Sesión 3: estados de validación y mensajes
+   ========================================================== */
+
+
+/* ---------- 1. Variables ---------- */
+:root {
+  /* Colores */
+  --amarillo: #ffd23f;   /* fondo de la página */
+  --tinta: #000000;      /* texto, bordes y sombras */
+  --papel: #ffffff;      /* tarjeta y campos */
+  --azul: #3a5cff;       /* botón y foco */
+  --gris: #5c5c5c;       /* textos de ayuda */
+  --rojo: #c81d34;       /* errores */
+  --verde: #1b7f4b;      /* campo correcto */
+  --verde-claro: #b8f2cf; /* fondo del mensaje de éxito */
+  --rosa-claro: #ffc9d0;  /* fondo del mensaje de error */
+
+  /* Tipografía */
+  --fuente: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+
+  /* Bordes, radios y sombras */
+  --borde: 3px solid var(--tinta);
+  --borde-fino: 2px solid var(--tinta);
+  --radio-tarjeta: 18px;
+  --radio-campo: 10px;
+  --sombra-grande: 10px 10px 0 var(--tinta);
+  --sombra-chica: 4px 4px 0 var(--tinta);
+}
+
+
+/* ---------- 2. Reset básico ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background-color: var(--azul);
+  color: var(--papel);
+}
+
+/* Lo que JavaScript oculta con el atributo hidden no debe verse */
+[hidden] {
+  display: none !important;
+}
+
+
+/* ---------- 3. Página: encabezado / contenido / pie ---------- */
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--tinta);
+  background-color: var(--amarillo);
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
+/* ---------- 4. Encabezado (Flexbox) ---------- */
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+.logo {
+  padding: 6px 14px;
+  border: var(--borde-fino);
+  border-radius: 8px;
+  background-color: var(--papel);
+  box-shadow: var(--sombra-chica);
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+
+/* ---------- 5. Contenido principal (Grid de 2 columnas) ---------- */
+.pagina {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+  align-items: center;
+  gap: 48px 72px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 32px 64px;
+}
+
+
+/* ---------- 6. Presentación ---------- */
+.intro h1 {
+  font-size: clamp(3.25rem, 8vw, 7rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+.intro__texto {
+  max-width: 36ch;
+  margin-top: 24px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Lista de temas en fila (Flexbox) */
+.intro__temas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+  list-style: none;
+}
+
+.intro__temas li {
+  padding: 6px 16px;
+  border: var(--borde-fino);
+  border-radius: 999px;
+  background-color: var(--papel);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+
+/* ---------- 7. Tarjeta del formulario ---------- */
+.tarjeta {
+  padding: 36px;
+  background-color: var(--papel);
+  border: var(--borde);
+  border-radius: var(--radio-tarjeta);
+  box-shadow: var(--sombra-grande);
+}
+
+
+/* ---------- 8. Formulario (Grid con áreas) ---------- */
+.formulario {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-areas:
+    "nota     nota"
+    "nombre   nombre"
+    "correo   correo"
+    "password password"
+    "edad     telefono"
+    "boton    boton"
+    "mensaje  mensaje";
+  gap: 22px 16px;
+}
+
+.formulario__nota { grid-area: nota; }
+.campo--nombre    { grid-area: nombre; }
+.campo--correo    { grid-area: correo; }
+.campo--password  { grid-area: password; }
+.campo--edad      { grid-area: edad; }
+.campo--telefono  { grid-area: telefono; }
+.boton            { grid-area: boton; }
+.mensaje          { grid-area: mensaje; }
+
+.formulario__nota {
+  font-size: 0.95rem;
+  color: var(--gris);
+}
+
+
+/* ---------- 9. Campos ---------- */
+
+/* Cada campo apila label, input y ayuda (Flexbox en columna) */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo > label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  height: 52px;
+  padding: 0 14px;
+  border: var(--borde-fino);
+  border-radius: var(--radio-campo);
+  background-color: var(--papel);
+  color: var(--tinta);
+  font: inherit;
+  font-weight: 500;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.campo input::placeholder {
+  color: var(--gris);
+  font-weight: 400;
+  opacity: 1;
+}
+
+/* Al escribir, el campo se levanta y aparece una sombra azul */
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--azul);
+}
+
+/* Texto de ayuda debajo de cada campo
+   (script.js lo cambia por el mensaje de error cuando hace falta) */
+.ayuda {
+  font-size: 0.875rem;
+  color: var(--gris);
+}
+
+/* Campo numérico sin flechas */
+.campo input[type="number"] {
+  appearance: textfield;
+}
+
+.campo input[type="number"]::-webkit-inner-spin-button,
+.campo input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+/* Teléfono: código de país + número en una fila (Flexbox) */
+.telefono {
+  display: flex;
+  gap: 8px;
+}
+
+.telefono select {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 34px 0 12px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.telefono input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Texto oculto a la vista, pero lo leen los lectores de pantalla */
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+
+/* ---------- 10. Botón ---------- */
+.boton {
+  height: 58px;
+  margin-top: 6px;
+  border: var(--borde);
+  border-radius: var(--radio-campo);
+  background-color: var(--azul);
+  color: var(--papel);
+  box-shadow: 6px 6px 0 var(--tinta);
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.boton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 var(--tinta);
+}
+
+/* Al hacer clic se "hunde" sobre su sombra */
+.boton:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--tinta);
+}
+
+.boton:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 5px;
+}
+
+
+/* ---------- 11. Pie de página ---------- */
+.pie {
+  padding: 20px 32px 28px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+
+/* ---------- 12. Diseño adaptable ---------- */
+
+/* Tablets: presentación arriba, formulario abajo */
+@media (max-width: 960px) {
+  .pagina {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
+    gap: 36px;
+    padding-top: 8px;
+  }
+
+  .intro h1 {
+    font-size: clamp(3rem, 13vw, 5.25rem);
+  }
+}
+
+/* Celulares: el formulario pasa a una sola columna */
+@media (max-width: 560px) {
+  .encabezado {
+    padding: 18px 20px;
+  }
+
+  .pagina {
+    padding: 8px 20px 48px;
+  }
+
+  .intro__texto {
+    font-size: 1.05rem;
+  }
+
+  .tarjeta {
+    padding: 24px 20px;
+    box-shadow: 6px 6px 0 var(--tinta);
+  }
+
+  .formulario {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "nota"
+      "nombre"
+      "correo"
+      "password"
+      "edad"
+      "telefono"
+      "boton"
+      "mensaje";
+  }
+}
+
+
+/* ---------- 13. Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .campo input,
+  .campo select,
+  .boton {
+    transition: none;
+  }
+
+  .campo input:focus,
+  .campo select:focus,
+  .boton:hover,
+  .boton:active {
+    transform: none;
+  }
+
+  .mensaje {
+    animation: none;
+  }
+}
+
+
+/* ---------- 14. Sesión 3: estados de validación y mensajes ---------- */
+
+/* Campo con error (clase que agrega script.js).
+   También con :focus para que el rojo se mantenga mientras se corrige */
+.campo--error input,
+.campo--error input:focus {
+  border-color: var(--rojo);
+  box-shadow: 4px 4px 0 var(--rojo);
+}
+
+.campo--error .ayuda {
+  color: var(--rojo);
+  font-weight: 500;
+}
+
+/* Campo correcto: borde verde y un visto junto al nombre del campo */
+.campo--ok input {
+  border-color: var(--verde);
+}
+
+.campo--ok > label::after {
+  content: " ✓";
+  color: var(--verde);
+}
+
+/* Mensaje general del formulario */
+.mensaje {
+  padding: 14px 16px;
+  border: var(--borde-fino);
+  border-radius: var(--radio-campo);
+  box-shadow: var(--sombra-chica);
+  font-weight: 700;
+  animation: aparecer 0.25s ease-out;
+}
+
+.mensaje--exito {
+  background-color: var(--verde-claro);
+}
+
+.mensaje--error {
+  background-color: var(--rosa-claro);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
