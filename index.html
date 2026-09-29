@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Registro de usuarios del Club de Código">
+  <meta name="author" content="Jose Luis Farias Valdez">
+  <title>Únete al Club de Código</title>
+
+  <!-- Tipografía: Bricolage Grotesque (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&display=swap">
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <a href="#" class="logo">Club de Código</a>
+  </header>
+
+  <main class="pagina">
+
+    <!-- Presentación -->
+    <section class="intro">
+      <h1 id="titulo">Únete al club.</h1>
+      <p class="intro__texto">
+        Crea tu cuenta para inscribirte en talleres, participar en retos de programación
+        y armar proyectos con otros estudiantes.
+      </p>
+      <ul class="intro__temas">
+        <li>Talleres semanales</li>
+        <li>Retos de programación</li>
+        <li>Proyectos en equipo</li>
+      </ul>
+    </section>
+
+    <!-- Formulario de registro -->
+    <section class="tarjeta">
+      <form id="formulario-registro" class="formulario" action="#" method="post" aria-labelledby="titulo">
+
+        <p class="formulario__nota">Todos los campos son obligatorios.</p>
+
+        <div class="campo campo--nombre">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ej.: Ana María Torres"
+                 required minlength="3" maxlength="60"
+                 pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+" title="Solo letras y espacios"
+                 autocomplete="name" aria-describedby="ayuda-nombre">
+          <small id="ayuda-nombre" class="ayuda">Escribe tu nombre y apellido, solo con letras.</small>
+        </div>
+
+        <div class="campo campo--correo">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" placeholder="nombre@correo.com"
+                 required maxlength="100"
+                 autocomplete="email" aria-describedby="ayuda-correo">
+          <small id="ayuda-correo" class="ayuda">Debe tener el formato nombre@correo.com.</small>
+        </div>
+
+        <div class="campo campo--password">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="Crea una contraseña"
+                 required minlength="8" maxlength="30"
+                 pattern="(?=.*[A-Za-z])(?=.*[0-9]).{8,30}"
+                 title="Entre 8 y 30 caracteres, con letras y números"
+                 autocomplete="new-password" aria-describedby="ayuda-password">
+          <small id="ayuda-password" class="ayuda">Mínimo 8 caracteres, con letras y números.</small>
+        </div>
+
+        <div class="campo campo--edad">
+          <label for="edad">Edad</label>
+          <input type="number" id="edad" name="edad" placeholder="18"
+                 required min="16" max="99" step="1"
+                 aria-describedby="ayuda-edad">
+          <small id="ayuda-edad" class="ayuda">De 16 a 99 años.</small>
+        </div>
+
+        <div class="campo campo--telefono">
+          <label for="telefono">Teléfono</label>
+          <div class="telefono">
+            <label for="codigo" class="oculto">Código de país</label>
+            <select id="codigo" name="codigo">
+              <option value="+593" selected>EC +593</option>
+              <option value="+57">CO +57</option>
+              <option value="+51">PE +51</option>
+              <option value="+34">ES +34</option>
+              <option value="+1">US +1</option>
+            </select>
+            <input type="tel" id="telefono" name="telefono" placeholder="991234567"
+                   required pattern="[0-9]{7,10}" maxlength="10"
+                   title="Solo números, de 7 a 10 dígitos"
+                   autocomplete="tel" aria-describedby="ayuda-telefono">
+          </div>
+          <small id="ayuda-telefono" class="ayuda">Solo números, sin espacios.</small>
+        </div>
+
+        <button type="submit" class="boton">Crear mi cuenta</button>
+
+        <!-- Mensaje de error o éxito (lo llena script.js) -->
+        <div id="mensaje" class="mensaje" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>Proyecto académico de Desarrollo Web, 2026.</p>
+  </footer>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>
